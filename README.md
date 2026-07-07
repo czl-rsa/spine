@@ -7,6 +7,13 @@ git-tracked file — so your decisions survive `/clear` and don't drown in scrol
 > The chat is scratch (burn it with `/clear`). The file `drafts/spine/<topic>.spine.md` is the
 > clean copy: settled decisions land one at a time, append-only, never rewritten behind your back.
 
+## Install
+```bash
+git clone https://github.com/czl-rsa/spine ~/.claude/skills/spine
+```
+Then run `/spine help` in Claude Code. Repo-agnostic — works in any project, and skips git steps outside a repo.
+(For a single project only, clone into `<project>/.claude/skills/spine` instead.)
+
 ## Why
 In the CLI you can't edit a past message, so the editable thing is moved into a file and the chat is
 treated as throwaway. You come back tomorrow and see exactly what you concluded — not 400 turns of noise.
@@ -36,10 +43,6 @@ author's judgement.
 
 ## The loop
 `think (chat) → /spine (write essence + "now reset") → /clear → /spine (re-inject essence) → think again, light.`
-
-## Install
-Copy this folder to `~/.claude/skills/spine/` (user skill) or a project's `.claude/skills/spine/`.
-Repo-agnostic: it resolves the working root itself and skips git steps outside a repo.
 
 ## Test
 ```bash
