@@ -1,5 +1,8 @@
 # spine — planning that stays a file, not lost in the chat
 
+[![gate](https://github.com/czl-rsa/spine/actions/workflows/gate.yml/badge.svg)](https://github.com/czl-rsa/spine/actions/workflows/gate.yml)
+[![license: PolyForm Noncommercial 1.0.0](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-blue)](LICENSE)
+
 A Claude Code CLI skill for **crystallize-then-advance planning**. Brainstorm freely in a
 disposable chat; when a thought settles, `/spine` rewrites it as one compact, gated block in a
 git-tracked file — so your decisions survive `/clear` and don't drown in scrollback.

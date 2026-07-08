@@ -1,0 +1,25 @@
+name: gate
+on:
+  push:
+  pull_request:
+jobs:
+  fixtures:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: run the 14 gate fixtures
+        working-directory: tests
+        run: |
+          set -u
+          fail=0
+          cases="node-golden:0 node-bare:1 node-fakecite:1 node-decision:0 node-definition:0 node-open:0 \
+                 node-decision-bare:1 node-decision-repeat:1 node-decision-punct:1 node-decision-rejbare:1 \
+                 node-definition-wasdash:1 node-open-missing:1 node-badtype:1 node-multi:1"
+          for c in $cases; do
+            n=${c%:*}; w=${c#*:}
+            bash ../scripts/spine-gate.sh "$n.md" >/dev/null 2>&1; g=$?
+            if [ "$g" = "$w" ]; then echo "ok    $n (exit $g)"; else echo "FAIL  $n (want $w, got $g)"; fail=1; fi
+          done
+          printf '%s' "$(cat node-golden.md)" | bash ../scripts/spine-gate.sh - >/dev/null 2>&1 \
+            && echo "ok    stdin" || { echo "FAIL  stdin"; fail=1; }
+          exit $fail
