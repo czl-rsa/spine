@@ -7,6 +7,10 @@ A Claude Code CLI skill for **crystallize-then-advance planning**. Brainstorm fr
 disposable chat; when a thought settles, `/spine` rewrites it as one compact, gated block in a
 git-tracked file — so your decisions survive `/clear` and don't drown in scrollback.
 
+![spine cycle: /spine new → brainstorm → /spine → /clear → /spine resumes from the file](docs/demo.gif)
+
+<sub>Illustration of the loop (not a live screen recording).</sub>
+
 > The chat is scratch (burn it with `/clear`). The file `drafts/spine/<topic>.spine.md` is the
 > clean copy: settled decisions land one at a time, append-only, never rewritten behind your back.
 
