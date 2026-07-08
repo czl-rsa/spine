@@ -2,7 +2,8 @@
 name: spine
 description: >-
   Crystallize-then-advance planning loop. Use whenever the user runs `/spine`, `/spine new`,
-  `/spine drop`, or `/spine help` (`-help`/`--help`/`?` → print the cheat-sheet), or says
+  `/spine list`, `/spine switch "<slug>"`, `/spine drop`, or `/spine help` (`-help`/`--help`/`?` →
+  print the cheat-sheet), or says
   "crystallize this / lock this decision / open a spine / what did we crystallize / continue the
   plan / advance to the next planning question". The user handles context surgery with native
   `/rewind` ("summarize from here") and `/clear`; THIS skill ONLY manages `drafts/spine/<topic>.spine.md`
@@ -33,6 +34,8 @@ once per run: `ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"` — a
 |---|---|
 | `/spine help` · `/spine -help` · `/spine --help` · `/spine ?` | **HELP** — print the cheat-sheet, touch nothing |
 | `/spine new "<topic/question>"` | **SEED** a new topic + node 1 |
+| `/spine list` · `/spine topics` | **LIST** all topics (mark the active one) |
+| `/spine switch "<slug>"` · `/spine use "<slug>"` | **SWITCH** the active topic, then LOAD it |
 | `/spine` on a fresh/just-rebooted chat (nothing to crystallize) | **LOAD** the active spine |
 | `/spine` after the user has reached a settled answer in chat | **CRYSTALLIZE** the current node |
 | `/spine drop` | **DROP** the current DRAFTING node body |
@@ -56,6 +59,8 @@ Commands.
                           decided and why (for a fact, with a source cite). Then the next question
                           opens. Nothing to write (fresh chat)? — it re-injects the essence of the
                           past decisions so you can keep thinking.
+  /spine list             List all topics and mark the active one.
+  /spine switch "slug"    Switch to another existing topic and resume it from its file.
   /spine drop             Wipe the current unfinished entry and restate it from scratch.
                           Never touches decisions already written.
   /spine help             This help.
@@ -91,6 +96,22 @@ entries in order (1, 2, 3 …).
 3. Write `drafts/spine/.active` = that path (one line).
 4. Reply terse, onboarding voice: «Topic opened · entry 1: "<question>". Think freely in the chat; once you
    land a decision, `/spine` writes it to the file and then `/clear` is safe. New here? — `/spine help`.»
+
+### LIST — `/spine list` (also `topics`)
+Read-only. Glob `drafts/spine/*.spine.md`. For each: read its `topic:`, `status:`, and the current `[DRAFTING]`
+node's open question. Print one line per topic — **mark the active one** (the path in `drafts/spine/.active`) with `→`:
+```
+→ which-database   (node 2)  schema migrations?
+  respiration       (node 5)  M7 degrade path?
+```
+If there are no topic files, say so and suggest `/spine new "..."`. Touch nothing.
+
+### SWITCH — `/spine switch "<slug>"` (also `use`)
+Repoint the active topic, then resume it.
+1. Resolve `drafts/spine/<slug>.spine.md`. **If it does not exist:** do NOT create it — list the closest existing
+   slugs (like LIST) and stop. (`/spine new` is the only path that creates a file.)
+2. Overwrite `drafts/spine/.active` with that path (one line). Nothing else is written.
+3. Immediately run **LOAD** on it (re-inject that topic's ESSENCE), so the chat resumes on the switched topic.
 
 ### LOAD — `/spine` on a fresh chat (re-inject the ESSENCE after /clear or /rewind)
 The READ half of the smart-compact loop: the user shed the chat, so re-seed the conversation with **just enough

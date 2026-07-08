@@ -30,6 +30,8 @@ treated as throwaway. You come back tomorrow and see exactly what you concluded 
 |---|---|
 | `/spine new "question"` | open a new topic — the plan gets its own file |
 | `/spine` | write the settled decision to the file; on a fresh chat, re-inject the essence to resume |
+| `/spine list` | list all topics, mark the active one |
+| `/spine switch "slug"` | switch to another existing topic and resume it |
 | `/spine drop` | wipe the current unfinished draft node (never touches frozen decisions) |
 | `/spine help` | the cheat-sheet |
 
